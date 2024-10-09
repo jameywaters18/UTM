@@ -412,7 +412,6 @@ extension QEMUArchitecture {
         case .cris: return false
         case .m68k: return false
         case .microblaze, .microblazeel: return false
-        case .nios2: return false
         case .rx: return false
         case .sparc, .sparc64: return false
         case .tricore: return false
@@ -453,7 +452,11 @@ extension QEMUArchitecture {
         #if os(iOS) || os(visionOS)
         return hasHypervisorSupport
         #else
-        return false
+        if #available(macOS 15, *) {
+            return true
+        } else {
+            return false
+        }
         #endif
     }
     
